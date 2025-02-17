@@ -11,12 +11,12 @@ module.exports = {
       },
       colors:{
         "primary":{
-          100: "7B85BC",
-          200: "283370"
+          100: "#7B85BC",
+          200: "#283370"
         },
         "secondary":{
-          100:"FFFFFF",
-          200:"EAEAEA"
+          100:"#FFFFFF",
+          200:"#EAEAEA"
         }
       }
     },
