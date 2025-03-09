@@ -7,6 +7,11 @@ import notifications from "@/assets/icons/notifications.png";
 import profile from "@/assets/icons/profile.png";
 import settings from "@/assets/icons/settings.png";
 import subjects from "@/assets/icons/subjects.png";
+import edit from "@/assets/icons/edit.png";
+import arrow from "@/assets/icons/arrow.png"
+import student from "@/assets/icons/student.png"
+import teacher from "@/assets/icons/teacher.png"
+import logout from "@/assets/icons/logout.png";
 
 export default{
     calendar,
@@ -17,5 +22,10 @@ export default{
     notifications,
     profile,
     settings,
-    subjects
+    subjects,
+    edit,
+    arrow,
+    student,
+    teacher,
+    logout
 }
