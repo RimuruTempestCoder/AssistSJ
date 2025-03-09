@@ -12,6 +12,7 @@ import arrow from "@/assets/icons/arrow.png"
 import student from "@/assets/icons/student.png"
 import teacher from "@/assets/icons/teacher.png"
 import logout from "@/assets/icons/logout.png";
+import search from "@/assets/icons/search.png"
 
 export default{
     calendar,
@@ -27,5 +28,6 @@ export default{
     arrow,
     student,
     teacher,
-    logout
+    logout,
+    search
 }
