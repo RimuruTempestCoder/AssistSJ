@@ -52,8 +52,8 @@ const profile = () => {
         <View className='flex-row justify-center flex mt-5'>
             <View className='flex flex-col items-center relative mt-5'>
                 <Image source={{uri : user?.avatar}} className='size-44 relative rounded-full'/>
-                <TouchableOpacity className='absoulte bottom-11 left-14 shadow-md shadow-primary-200'>
-                    <Image source={icons.edit} className='size-9 bg-white rounded' tintColor= '#283370'></Image>
+                <TouchableOpacity className='absoulte bottom-11 left-14 shadow-md shadow-primary-200 '>
+                    <Image source={icons.edit} className='size-9 bg-white rounded border border-primary-200' tintColor= '#283370'></Image>
                 </TouchableOpacity>
                 <Text className='text-2xl font-jaldi-bold mt-2 mb-5 text-primary-200'>{user?.name}</Text>
             </View>

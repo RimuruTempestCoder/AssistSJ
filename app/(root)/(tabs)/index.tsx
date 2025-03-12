@@ -6,22 +6,31 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "react-native";
 import images from "@/constants/images"
 import icons from "@/constants/icons";
+import Topic from "@/components/topic"
+import Header from "@/components/Header";
 
 export default function Index() {
   return (
-      <SafeAreaView className="bg-white">
-        <View className="px-5">
-          <View className="flex flex-row items-center justify-between mt-5">
-            <View className="flex flex-row items-center">
-              <Image source={images.avatar} className="rounded-full size-12"/>
-              <View className="flex flex-col items-start ml-2 justify-center">
-                <Text className="text-s text-primary-100 font-jaldi">Buenos dias</Text>
-                <Text className="text-primary-200 font-jaldi-bold text-xl">Beto Tempest</Text>
-              </View>
-            </View>
-            <Image source={icons.notifications} tintColor={'#283370'}></Image>
-          </View>
-        </View>
-      </SafeAreaView>
+    <SafeAreaView className="bg-white">
+    <View className="px-5">
+    <Header/>
+  
+      <View className="w-full items-center mt-2">
+        <Image source={images.main} className="rounded w-full h-80 mt-3 mb-3" />
+      </View>
+  
+      <View className="w-full flex flex-row justify-between mt-2">
+        <Topic icon={icons.groups} title="Crear Grupos"/>
+        <Topic icon={icons.calendar} title="Cronograma"/>
+        <Topic icon={icons.subjects} title="Crear Materias"/>
+      </View>
+
+      <View className="mt-5">
+        <Text className="text-xl text-primary-200 font-jaldi-bold">Avisos</Text>
+        <View></View>
+      </View>
+    </View>
+  </SafeAreaView>
+  
   );
 }
