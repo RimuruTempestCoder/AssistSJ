@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import { Text, View, ScrollView } from "react-native";
 import { useGlobalContext } from '@/lib/global-provider'
 import { Redirect } from 'expo-router'
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,10 +8,12 @@ import images from "@/constants/images"
 import icons from "@/constants/icons";
 import Topic from "@/components/topic"
 import Header from "@/components/Header";
+import Advices from "@/components/Advices";
 
 export default function Index() {
   return (
     <SafeAreaView className="bg-white">
+    <ScrollView>
     <View className="px-5">
     <Header/>
   
@@ -27,9 +29,15 @@ export default function Index() {
 
       <View className="mt-5">
         <Text className="text-xl text-primary-200 font-jaldi-bold">Avisos</Text>
-        <View></View>
+        <View className="gap-4 mb-20">
+            <Advices title="Ejemplo" description="Descripcion de ejemplo"/>
+            <Advices title="Ejemplo" description="Descripcion de ejemplo"/>
+            <Advices title="Ejemplo" description="Descripcion de ejemplo"/>
+            <Advices title="Ejemplo" description="Descripcion de ejemplo"/>
+        </View>
       </View>
     </View>
+    </ScrollView>
   </SafeAreaView>
   
   );
