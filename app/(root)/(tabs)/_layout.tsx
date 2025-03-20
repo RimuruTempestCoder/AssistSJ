@@ -49,12 +49,12 @@ const TabsLayout = () => {
         />
 
       <Tabs.Screen
-        name = 'subjects'
+        name = 'activities'
         options = {{
-          title:'Materias',
+          title:'Cronograma',
           headerShown: false,
           tabBarIcon: ({focused}) => (
-            <TabIcon icon={icons.subjects} focused = {focused} title='Materias'/>
+            <TabIcon icon={icons.calendar} focused = {focused} title='Cronograma'/>
           )
         }}
         />

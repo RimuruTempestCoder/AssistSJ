@@ -13,6 +13,7 @@ import student from "@/assets/icons/student.png"
 import teacher from "@/assets/icons/teacher.png"
 import logout from "@/assets/icons/logout.png";
 import search from "@/assets/icons/search.png"
+import refresh from "@/assets/icons/refresh.png"
 
 export default{
     calendar,
@@ -29,5 +30,6 @@ export default{
     student,
     teacher,
     logout,
-    search
+    search,
+    refresh
 }

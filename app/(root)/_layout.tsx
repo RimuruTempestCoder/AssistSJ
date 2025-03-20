@@ -3,6 +3,7 @@ import { Slot, useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ActivityIndicator } from "react-native";
+import QueryProvider from "@/providers/QueryProvider";
 
 export default function AppLayout() {
     const { loading, isLogged } = useGlobalContext();
