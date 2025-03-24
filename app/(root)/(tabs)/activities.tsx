@@ -26,12 +26,12 @@ const ActivityScreen = () => {
   const [subjects, setSubjects] = useState<Record<number, string>>({});
   const { user } = useGlobalContext(); // Usuario autenticado
 
-  // Obtener los horarios del profesor desde Supabase
+
   const fetchSchedules = async (date: string) => {
     if (!user?.email) return;
 
     try {
-      // 1️⃣ Obtener el ID del maestro usando su correo
+
       const { data: teacherData, error: teacherError } = await supabase
         .from('users')
         .select('id')
@@ -60,15 +60,13 @@ const ActivityScreen = () => {
 
       setSchedules(scheduleData || []);
 
-      // 3️⃣ Obtener los nombres de las materias de las clases obtenidas
-      // 3️⃣ Obtener los nombres de las materias de las clases obtenidas
 const materiaIds = [...new Set(scheduleData?.map((s) => s.id_materia) || [])];
 
 console.log("Materia IDs obtenidos:", materiaIds);  // Log de los ID de materias
 
 if (materiaIds.length > 0) {
   const { data: subjectData, error: subjectError } = await supabase
-    .from('subjects') // Asegúrate de que este es el nombre correcto de la tabla
+    .from('subjects') 
     .select('id, nombre')
     .in('id', materiaIds);
 
@@ -77,13 +75,13 @@ if (materiaIds.length > 0) {
     return;
   }
 
-  console.log("Materia Data recibida:", subjectData); // Verifica los datos recibidos
+  console.log("Materia Data recibida:", subjectData); 
   const subjectMap: Record<number, string> = {};
   subjectData?.forEach((subject: Subject) => {
     subjectMap[subject.id] = subject.nombre;
   });
 
-  console.log("Subject Map: ", subjectMap); // Verifica el mapeo
+  console.log("Subject Map: ", subjectMap); 
 
   setSubjects(subjectMap);
 }
@@ -93,7 +91,7 @@ if (materiaIds.length > 0) {
     }
   };
 
-  // Cargar horarios cuando cambia la fecha seleccionada
+
   useEffect(() => {
     fetchSchedules(selectedDate);
   }, [selectedDate]);

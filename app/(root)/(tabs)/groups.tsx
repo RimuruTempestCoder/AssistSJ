@@ -15,6 +15,7 @@ interface Group {
 
 const Groups = () => {
   const [groups, setGroups] = useState<Group[]>([]);
+  const [teacherId, setTeacherId] = useState<number | null>(null); // Store teacherId here
   const { user } = useGlobalContext(); // Obtener el usuario autenticado
 
   const fetchGroups = async () => {
@@ -24,7 +25,7 @@ const Groups = () => {
         .from('users')
         .select('id')
         .eq('correo', user.email)
-        .single(); 
+        .single();
 
       if (teacherError) {
         console.error('Error obteniendo el ID del maestro:', teacherError);
@@ -38,6 +39,7 @@ const Groups = () => {
       }
 
       const teacherId = teacherData.id;
+      setTeacherId(teacherId); // Set the teacherId here
 
       const { data: teacherGroups, error: teacherGroupsError } = await supabase
         .from('teacher_subject_group')
@@ -75,7 +77,7 @@ const Groups = () => {
 
   useEffect(() => {
     fetchGroups();
-  }, []);
+  }, [user?.email]); // Re-run fetchGroups if email changes
 
   return (
     <SafeAreaView className="bg-white">
@@ -88,11 +90,14 @@ const Groups = () => {
           </TouchableOpacity>
         </View>
         <View>
-          {groups.length > 0 ? (
-            groups.map((group) => <Grupos key={group.id} nombre={group.nombre} />)
-          ) : (
-            <Text>No hay grupos disponibles</Text>
-          )}
+          {teacherId !== null && groups.length > 0 ? (
+          groups.map((group) => (
+          <Grupos key={group.id} id={group.id} id_maestro={teacherId} nombre={group.nombre} />
+          ))
+            ) : (
+              <Text>No hay grupos disponibles o el ID del maestro no se ha cargado</Text>
+            )}
+
         </View>
       </View>
     </SafeAreaView>

@@ -14,6 +14,7 @@ import teacher from "@/assets/icons/teacher.png"
 import logout from "@/assets/icons/logout.png";
 import search from "@/assets/icons/search.png"
 import refresh from "@/assets/icons/refresh.png"
+import back from "@/assets/icons/back.png"
 
 export default{
     calendar,
@@ -31,5 +32,6 @@ export default{
     teacher,
     logout,
     search,
-    refresh
+    refresh,
+    back
 }
