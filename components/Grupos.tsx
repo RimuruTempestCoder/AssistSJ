@@ -7,22 +7,24 @@ interface ItemProps {
   id: number;
   id_maestro: number;
   nombre: string;
+  id_materia?: string; // Puede ser undefined
 }
 
-const Grupos = ({ id, id_maestro, nombre }: ItemProps) => {
+const Grupos = ({ id, id_maestro, nombre, id_materia }: ItemProps) => {
+  console.log(`Grupo Component - ID Grupo: ${id}, ID Maestro: ${id_maestro}, ID Materia: ${id_materia}`);
+
   return (
-    
     <Link 
       href={{ 
         pathname: '/(root)/subjects', 
         params: { 
           id_grupo: String(id), 
-          id_maestro: String(id_maestro) 
+          id_maestro: String(id_maestro), 
+          id_materia: id_materia ? String(id_materia) : undefined 
         } 
       }}
       asChild
     >
-
       <TouchableOpacity>
         <View className='flex flex-col p-2 mr-5 ml-5 m-2'>
           <View className='w-full h-20 bg-secondary-200 rounded-full flex flex-row'>
@@ -35,8 +37,8 @@ const Grupos = ({ id, id_maestro, nombre }: ItemProps) => {
         </View>
       </TouchableOpacity>
     </Link>
-    
   );
 };
+
 
 export default Grupos;

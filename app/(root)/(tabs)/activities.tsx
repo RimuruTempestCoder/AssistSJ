@@ -46,7 +46,6 @@ const ActivityScreen = () => {
 
       const teacherId = teacherData.id;
 
-      // 2️⃣ Obtener los horarios del maestro para la fecha seleccionada
       const { data: scheduleData, error: scheduleError } = await supabase
         .from('schedules')
         .select('id, id_materia, fecha, horario_inicio, horario_fin')
@@ -62,7 +61,7 @@ const ActivityScreen = () => {
 
 const materiaIds = [...new Set(scheduleData?.map((s) => s.id_materia) || [])];
 
-console.log("Materia IDs obtenidos:", materiaIds);  // Log de los ID de materias
+console.log("Materia IDs obtenidos:", materiaIds);  
 
 if (materiaIds.length > 0) {
   const { data: subjectData, error: subjectError } = await supabase

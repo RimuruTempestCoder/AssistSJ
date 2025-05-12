@@ -13,25 +13,30 @@ interface Group {
   nombre: string;
 }
 
+interface TeacherSubjectGroup {
+  id_grupo: number;
+  id_materia: number;
+}
+
 const Groups = () => {
   const [groups, setGroups] = useState<Group[]>([]);
-  const [teacherId, setTeacherId] = useState<number | null>(null); // Store teacherId here
+  const [teacherId, setTeacherId] = useState<number | null>(null);
+  const [teacherGroups, setTeacherGroups] = useState<TeacherSubjectGroup[]>([]);
+
   const { user } = useGlobalContext(); // Obtener el usuario autenticado
 
   const fetchGroups = async () => {
     if (!user?.email) return;
+    
     try {
+      // Obtener ID del maestro a partir del correo
       const { data: teacherData, error: teacherError } = await supabase
         .from('users')
         .select('id')
         .eq('correo', user.email)
         .single();
 
-      if (teacherError) {
-        console.error('Error obteniendo el ID del maestro:', teacherError);
-        return;
-      }
-
+      if (teacherError) throw teacherError;
       if (!teacherData) {
         console.log('No se encontró un maestro con este correo.');
         setGroups([]);
@@ -39,35 +44,31 @@ const Groups = () => {
       }
 
       const teacherId = teacherData.id;
-      setTeacherId(teacherId); // Set the teacherId here
+      setTeacherId(teacherId);
 
-      const { data: teacherGroups, error: teacherGroupsError } = await supabase
+      // Obtener los grupos y materias del maestro
+      const { data: teacherGroupsData, error: teacherGroupsError } = await supabase
         .from('teacher_subject_group')
-        .select('id_grupo')
+        .select('id_grupo, id_materia')
         .eq('id_maestro', teacherId);
 
-      if (teacherGroupsError) {
-        console.error('Error obteniendo los grupos del maestro:', teacherGroupsError);
-        return;
-      }
-
-      if (!teacherGroups.length) {
+      if (teacherGroupsError) throw teacherGroupsError;
+      if (!teacherGroupsData.length) {
         console.log('El maestro no tiene grupos asignados.');
         setGroups([]);
         return;
       }
 
-      const groupIds = teacherGroups.map((tg) => tg.id_grupo);
+      setTeacherGroups(teacherGroupsData);
 
+      // Obtener detalles de los grupos
+      const groupIds = teacherGroupsData.map((tg) => tg.id_grupo);
       const { data: groupsData, error: groupsError } = await supabase
         .from('groups')
         .select('*')
         .in('id', groupIds);
 
-      if (groupsError) {
-        console.error('Error obteniendo detalles de los grupos:', groupsError);
-        return;
-      }
+      if (groupsError) throw groupsError;
 
       setGroups(groupsData as Group[]);
     } catch (error) {
@@ -77,7 +78,7 @@ const Groups = () => {
 
   useEffect(() => {
     fetchGroups();
-  }, [user?.email]); // Re-run fetchGroups if email changes
+  }, [user?.email]);
 
   return (
     <SafeAreaView className="bg-white">
@@ -90,13 +91,26 @@ const Groups = () => {
           </TouchableOpacity>
         </View>
         <View>
-          {teacherId !== null && groups.length > 0 ? (
-          groups.map((group) => (
-          <Grupos key={group.id} id={group.id} id_maestro={teacherId} nombre={group.nombre} />
-          ))
-            ) : (
-              <Text>No hay grupos disponibles o el ID del maestro no se ha cargado</Text>
-            )}
+        {teacherId !== null && groups.length > 0 ? (
+        groups.map((group) => {
+          const groupData = teacherGroups.find((tg) => tg.id_grupo === group.id);
+          const idMateria = groupData?.id_materia;
+
+          console.log(`Grupo: ${group.nombre}, ID Materia: ${idMateria}`); // Verifica que id_materia no sea undefined o null
+
+          return (
+            <Grupos 
+              key={group.id} 
+              id={group.id} 
+              id_maestro={teacherId} 
+              nombre={group.nombre} 
+              id_materia={idMateria ? String(idMateria) : undefined} 
+            />
+          );
+        })
+      ) : (
+        <Text>No hay grupos disponibles o el ID del maestro no se ha cargado</Text>
+      )}
 
         </View>
       </View>
